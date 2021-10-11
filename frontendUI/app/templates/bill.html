@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
+        <title>Bill</title>
+
+		<style>
+			.invoice-box {
+				max-width: 800px;
+				margin: auto;
+				padding: 30px;
+				border: 1px solid #eee;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+				font-size: 16px;
+				line-height: 24px;
+				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+				color: #555;
+			}
+
+			.invoice-box table {
+				width: 100%;
+				line-height: inherit;
+				text-align: left;
+			}
+
+			.invoice-box table td {
+				padding: 5px;
+				vertical-align: top;
+			}
+
+			.right-style {
+				text-align: right;
+			}
+
+			.invoice-box table tr.top table td {
+				padding-bottom: 20px;
+			}
+
+			.invoice-box table tr.top table td.title {
+				font-size: 45px;
+				line-height: 45px;
+				color: #333;
+			}
+
+			.invoice-box table tr.information table td {
+				padding-bottom: 40px;
+			}
+
+			.invoice-box table tr.heading td {
+				background: #eee;
+				border-bottom: 1px solid #ddd;
+				font-weight: bold;
+			}
+
+			.invoice-box table tr.details td {
+				padding-bottom: 20px;
+			}
+
+			.invoice-box table tr.item td {
+				border-bottom: 1px solid #eee;
+			}
+
+			.invoice-box table tr.item.last td {
+				border-bottom: none;
+			}
+
+			.invoice-box table tr.total td:nth-child(2) {
+				border-top: 2px solid #eee;
+				font-weight: bold;
+			}
+
+			@media only screen and (max-width: 600px) {
+				.invoice-box table tr.top table td {
+					width: 100%;
+					display: block;
+					text-align: center;
+				}
+
+				.invoice-box table tr.information table td {
+					width: 100%;
+					display: block;
+					text-align: center;
+				}
+			}
+
+			/** RTL **/
+			.invoice-box.rtl {
+				direction: rtl;
+				font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			}
+
+			.invoice-box.rtl table {
+				text-align: right;
+			}
+
+			.invoice-box.rtl table tr td:nth-child(2) {
+				text-align: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<p>
+			Hi {{username}},<br>
+			We are glad you used our service. Here is your bill for payment:<br>
+		</p>
+		<div class="invoice-box">
+			<table cellpadding="0" cellspacing="0">
+				<tr class="top">
+					<td colspan="2">
+						<table>
+							<tr>
+								<td class="title">
+									<img src="https://genxshopping.herokuapp.com/static/img/core-img/logo.png" style="width: 45%; max-width: 300px" />
+								</td>
+
+								<td class = "right-style">
+									Invoice #: {{bill}}<br />
+									Created: {{date.strftime("%B")}} {{date.day}}, {{date.year}}<br />
+									Due: {{date.strftime("%B")}} {{date.day}}, {{date.year}}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr class="information">
+					<td colspan="2">
+						<table>
+							<tr>
+								<td>
+									Team10, Inc.<br />
+									12345 Sunny Road<br />
+									Sunnyville, CA 12345
+								</td>
+
+								<td class = "right-style">
+									Customer<br />
+									{{username}}<br />
+									{{email}}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<table class="table table-hover">
+                    <thead>
+                      <tr >
+                        <!-- <th scope="col">#</th> -->
+                        <th scope="col">Name item</th>
+                        <th class="right-style" scope="col">Number</th>
+                        <th class="right-style" scope="col">Price</th>
+						<th class="right-style" scope="col">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                   
+                      {% for item in data %}
+                             
+                      <tr>
+                        <!-- <th scope="row">{{i}}</th> -->
+                        <td>{{item["name"]}}</td>
+                        <td class="right-style">{{item["count"]}}</td>
+                        <td class="right-style">{{item["price"]}}</td>
+						<td class="right-style">{{item["total"]}}</td>
+                      </tr>
+                      {% endfor %}        
+                      
+                    </tbody>
+                </table>
+
+				<tr class="total">
+					<td></td>
+
+					<td>Total: ${{total}}</td>
+				</tr>
+			</table>
+		</div>
+		<p>
+			Thank you for choosing us! 
+		</p>
+		<a href="https://genxshopping.herokuapp.com/">
+			<img src="https://genxshopping.herokuapp.com/static/img/core-img/logo.png" style="width: 10%; max-width: 300px" />
+		</a> 
+		
+	</body>
+</html>
